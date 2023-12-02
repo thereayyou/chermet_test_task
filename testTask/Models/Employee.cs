@@ -1,0 +1,98 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using testTask.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace testTask.Models
+{
+
+    [Table("Employees")]
+    public class Employee
+    {
+        [Key]
+        public int Id { get; set; }
+        public string FullName { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Surname { get; set; }
+
+        public int DepartmentId { get; set; }
+
+        // Позволяет распарсить модель Department
+
+        public Department Department { get; set; }
+
+        public string Phone { get; set; }
+
+        public byte[] Avatar { get; set; }
+
+        [NotMapped]
+        public IFormFile AvatarFile { get; set; }
+
+        public void Prepare(IWebHostEnvironment appEnvironment, MVCDemoDbContext mvcDemoDbContext)
+        {
+
+            // AsNoTracking говорит EF не отслеживать сущность
+
+            var oldEmployee = mvcDemoDbContext.Employee.AsNoTracking().FirstOrDefault(x => x.Id == Id);
+
+            if(AvatarFile != null)
+            {
+                byte[] avatar = null;
+                // Открывает поток для считывания пришедшего файла
+                using (var avatarByteReader = new BinaryReader(AvatarFile.OpenReadStream()))
+                {
+                    avatar = avatarByteReader.ReadBytes((int)AvatarFile.Length);
+                }
+                // Закрываем поток
+
+                Avatar = avatar;
+            }
+            else if(oldEmployee?.Avatar == null)
+            {
+                string standartAvatarPath = Path.Combine(appEnvironment.WebRootPath, "Files", "standart_avatar.jpg");
+                Avatar = System.IO.File.ReadAllBytes(standartAvatarPath);
+            } else
+            {
+                Avatar = oldEmployee.Avatar;
+            }
+
+            FullName = $"{LastName} {FirstName} {Surname}";
+        }
+
+        public string Validate()
+        {
+            if (LastName == null)
+            {
+                return "Введите фамилию";
+            }
+
+            if (FirstName == null) 
+            {
+                return "Введите имя";
+            }
+
+            if(Surname == null)
+            {
+                return "Введите отчество";
+            }
+
+            if(Phone == null || Phone == "+7(___)___-__-__")
+            {
+                return "Введите телефон";
+            }
+
+            if(DepartmentId == null)
+            {
+                return "Укажите отдел";
+            }
+
+            return "";
+
+        }
+    }
+
+}

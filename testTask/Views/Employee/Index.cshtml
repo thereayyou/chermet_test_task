@@ -1,0 +1,72 @@
+﻿@model testTask.Models.ViewModel.EmployeeListView;
+
+@{
+
+}
+
+<div>
+
+    <h1 class="mb-3">Сотрудники</h1>
+
+    <div class="search mb-3">
+        <select class="form-select select" id="searchBy">
+            <option value="FullName" selected>ФИО</option>
+            <option value="Phone">Телефон</option>
+        </select>
+        <input class="form-control search" onkeyup="findEmployee(this)" id="searchByValue" placeholder="Найти" />
+    </div>
+
+    <div id="result">
+
+        @if(Model.Employees != null)
+        {
+            <table class="table mb-3">
+                <thead>
+                    <tr>
+                        <th>Номер</th>
+                        <th>Фото</th>
+                        <th>ФИО</th>
+                        <th>Отдел</th>
+                        <th>Телефон</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var employee in Model.Employees)
+                    {
+                        <tr>
+                            <td>@employee.Id</td>
+                            <td><img style='width:90px; height:90px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(employee.Avatar))" /></td>
+                            <td>@employee.FullName</td>
+                            <td>@employee.Department.Name</td>
+                            <td>@employee.Phone</td>
+                            <td><a href="Employee/Detail/@employee.Id">Просмотреть</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="d-flex g-3 mb-3 justify-content-center" id="pagsBtns">
+                <ul>
+                @for (int indexPage = 1; indexPage <= Model.TotalPageCount; indexPage++)
+                {
+                        if(indexPage == Model.CurrentPage)
+                        {
+                            <li><button onclick="pageClick(this)" class="paginationItem active">@indexPage</button></li>
+                        } else
+                        {
+                            <li><button onclick="pageClick(this)" class="paginationItem">@indexPage</button></li>
+                        }
+                    }
+                </ul>
+            </div>
+        }
+        else {
+            <h2>Данные отстутствуют!</h2>
+        }
+
+    </div>
+
+    <a type="button" asp-action="Add" class="btn btn-primary">Добавить сотрудника</a>
+
+</div>

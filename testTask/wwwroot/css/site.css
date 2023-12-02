@@ -1,0 +1,74 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+tr {
+    vertical-align: baseline;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+td {
+    text-align: center;
+}
+
+th {
+    text-align: center;
+}
+
+ul {
+    display: flex;
+    gap: 15px;
+    padding-top: 15px;
+}
+
+li {
+    list-style-type: none;
+}
+
+button {
+    border-radius: 15px;
+    padding: 5px 15px;
+}
+
+.paginationItem {
+    border: none;
+    outline: none;
+    padding: 10px 16px;
+    background-color: black;
+    cursor: pointer;
+    color: white;
+}
+
+.active, .paginationItem:hover {
+    background-color: green;
+    color: white;
+}
+
+.search {
+    display: flex;
+    gap: 30px;
+}
+
+.form-select.select {
+    width: 20%;
+}
+
+.form-control.search {
+    width: 30%;
+}
