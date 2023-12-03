@@ -65,6 +65,7 @@ namespace testTask.Models
 
         public string Validate()
         {
+
             if (LastName == null)
             {
                 return "Введите фамилию";
@@ -88,6 +89,20 @@ namespace testTask.Models
             if(DepartmentId == null)
             {
                 return "Укажите отдел";
+            }
+
+            string[] permittedExtensions = { ".jpg", ".png", ".jpeg" };
+
+            string fileName = AvatarFile.FileName;
+
+            if (!permittedExtensions.Contains(fileName.Substring(fileName.LastIndexOf('.')))) 
+            {
+                return "Неправильный формат файла";
+            }
+
+            if (AvatarFile != null && AvatarFile.Length > 3145728)
+            {
+                return "Слишком большой размер файла";
             }
 
             return "";
