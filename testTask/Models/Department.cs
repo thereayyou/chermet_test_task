@@ -2,6 +2,9 @@
 
 namespace testTask.Models
 {
+    /// <summary>
+    ///  Модель для описани таблицы Department
+    /// </summary>
     public class Department
     {
         [Key]

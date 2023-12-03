@@ -49,6 +49,10 @@ namespace testTask.Models.ViewModel
                 return result;
             }
         }
+
+        /// <summary>
+        ///  Возвращаем количество работников
+        /// </summary>
         public int TotalPage 
         { 
             get 
@@ -57,10 +61,18 @@ namespace testTask.Models.ViewModel
             }
         }
 
+        /// <summary>
+        ///  Получаем общее количество страниц
+        /// </summary>
+
         public int TotalPageCount 
         { 
             get { return (int)(Math.Ceiling((decimal)TotalPage / SizePage)); }  
         }
+
+        /// <summary>
+        ///  Получаем список работников для конкретной страницы
+        /// </summary>
 
         public IQueryable<Employee> Employees 
         { 

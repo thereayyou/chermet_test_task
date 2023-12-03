@@ -14,9 +14,10 @@ namespace testTask.Data
         // Подключаем таблицу, которая описана в классе Employee
         public DbSet<Employee> Employee { get; set; }
 
+        // Подключаем таблицу, которая описана в классе Department
         public DbSet<Department> Department { get; set; }
 
-        // override переписываем метод у класса родителя
+        // override переписываем метод у класса родителя и описываем связь между таблицами
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>()

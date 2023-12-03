@@ -6,6 +6,10 @@ using Microsoft.EntityFrameworkCore;
 namespace testTask.Models
 {
 
+    /// <summary>
+    ///  Модель для описания таблицы Employees
+    /// </summary>
+
     [Table("Employees")]
     public class Employee
     {
@@ -21,8 +25,6 @@ namespace testTask.Models
 
         public int DepartmentId { get; set; }
 
-        // Позволяет распарсить модель Department
-
         public Department Department { get; set; }
 
         public string Phone { get; set; }
@@ -32,22 +34,23 @@ namespace testTask.Models
         [NotMapped]
         public IFormFile AvatarFile { get; set; }
 
+        /// <summary>
+        ///  Метод для считывания полученного аватара, либо установки стандартного. Получения поля FullName.
+        /// </summary>
+
         public void Prepare(IWebHostEnvironment appEnvironment, MVCDemoDbContext mvcDemoDbContext)
         {
-
-            // AsNoTracking говорит EF не отслеживать сущность
 
             var oldEmployee = mvcDemoDbContext.Employee.AsNoTracking().FirstOrDefault(x => x.Id == Id);
 
             if(AvatarFile != null)
             {
                 byte[] avatar = null;
-                // Открывает поток для считывания пришедшего файла
+
                 using (var avatarByteReader = new BinaryReader(AvatarFile.OpenReadStream()))
                 {
                     avatar = avatarByteReader.ReadBytes((int)AvatarFile.Length);
                 }
-                // Закрываем поток
 
                 Avatar = avatar;
             }
@@ -62,6 +65,10 @@ namespace testTask.Models
 
             FullName = $"{LastName} {FirstName} {Surname}";
         }
+
+        /// <summary>
+        ///  Валидация модели
+        /// </summary>
 
         public string Validate()
         {

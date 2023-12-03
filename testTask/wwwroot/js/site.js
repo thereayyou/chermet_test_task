@@ -1,4 +1,6 @@
-﻿function pageClick(e) {
+﻿// Функция для передачи текущей страницы, посредством ajax-запроса.
+
+function pageClick(e) {
     let page = e.innerHTML;
     let searchBy = $('#searchBy').val()
     let searchByValue = $('#searchByValue').val();
@@ -16,6 +18,8 @@
     })
 }
 
+// Функция для передачи полученного значения из select(ФИО/Номер телефона) и input (в котором происходит поиск сотрудника).
+
 function findEmployee(e) {
     let searchBy = $('#searchBy').val()
     let searchByValue = $('#searchByValue').val()
@@ -32,9 +36,14 @@ function findEmployee(e) {
         },
     })
 }
+
+// Функция для сокрытия ошибка, появляющиейся в случае незаполненного поля формы.
+
 setTimeout(function () {
     $('.alert').alert('close');
 }, 5000);
+
+// Валидация полец формы.
 
 const form = document.forms["form"];
 
@@ -57,6 +66,8 @@ function inputCheck(el) {
     }
 }
 
+// Маска для поля "Телефон".
+
 let phone = document.getElementById('phone');
 
 let maskOptions = {
@@ -64,24 +75,5 @@ let maskOptions = {
     lazy: false
 }
 let mask = new IMask(phone, maskOptions);
-
-// Get the container element
-var btnContainer = document.getElementById("pagsBtns");
-
-console.log(btnContainer)
-
-// Get all buttons with class="btn" inside the container
-var btns = btnContainer.getElementsByClassName("paginationItem");
-
-console.log(btns)
-
-// Loop through the buttons and add the active class to the current/clicked button
-for (let i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function () {
-        let current = document.getElementsByClassName("active");
-        current[0].className = current[0].className.replace(" active", "");
-        this.className += " active";
-    });
-}
 
 
