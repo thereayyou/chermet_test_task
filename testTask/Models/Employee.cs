@@ -98,18 +98,21 @@ namespace testTask.Models
                 return "Укажите отдел";
             }
 
-            string[] permittedExtensions = { ".jpg", ".png", ".jpeg" };
-
-            string fileName = AvatarFile.FileName;
-
-            if (!permittedExtensions.Contains(fileName.Substring(fileName.LastIndexOf('.')))) 
+            if(AvatarFile != null)
             {
-                return "Неправильный формат файла";
-            }
+                string[] permittedExtensions = { ".jpg", ".png", ".jpeg", ".webp" };
 
-            if (AvatarFile != null && AvatarFile.Length > 3145728)
-            {
-                return "Слишком большой размер файла";
+                string fileName = AvatarFile?.FileName;
+
+                if (!permittedExtensions.Contains(fileName.Substring(fileName.LastIndexOf('.'))))
+                {
+                    return "Неправильный формат файла";
+                }
+
+                if (AvatarFile != null && AvatarFile.Length > 3145728)
+                {
+                    return "Слишком большой размер файла";
+                }
             }
 
             return "";
