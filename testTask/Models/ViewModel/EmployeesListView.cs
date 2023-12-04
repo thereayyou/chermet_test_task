@@ -38,7 +38,7 @@ namespace testTask.Models.ViewModel
                             result = result.Where(x => x.FullName.Contains(SearchByValue));
                             break;
                         case "Phone":
-                            result = result.Where(x => x.Phone.StartsWith(SearchByValue));
+                            result = result.Where(x => x.Phone.StartsWith($"+7({SearchByValue}") || x.Phone.StartsWith(SearchByValue));
                             break;
                         default:
                             break;
